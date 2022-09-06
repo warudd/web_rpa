@@ -102,7 +102,7 @@ app.get('/get_sendque_tfu', function (req, res) {
         });
     });
 });
-// get mapdata > update status table
+// get mapdata > update status table_db
 app.get('/get_mapdata_tfu', function (req, res) {  
 
     var config = {
@@ -110,7 +110,8 @@ app.get('/get_mapdata_tfu', function (req, res) {
         password: 'bzknCuj6@6',
         //server: '172.24.4.197',
         server: '203.154.39.197',
-        database: 'Bot_DB'
+        database: 'Bot_DB',
+        trustServerCertificate: true
     };
     sql.connect(config, function (err) {
   
