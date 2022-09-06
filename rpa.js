@@ -20,8 +20,8 @@ app.post('/post_cs_noti_tfu', function (req, res) {
     var company=req.body.company;
     
          var config = {
-             user: 'sa',
-             password: 'bzknCuj6@6',
+             user: 'xxx',
+             password: 'xxx',
              //server: '172.24.4.197',
              server: '203.154.39.197',
              database: 'Bot_DB',
@@ -53,8 +53,8 @@ app.get('/get_sendque_tfu', function (req, res) {
     var token_line = '9iR2ytnJibWglY1a1lq29t47aWGoHkDg7Z6YTfBRV2B'
 
     var config = {
-        user: 'sa',
-        password: 'bzknCuj6@6',
+        user: 'xxx',
+        password: 'xxx',
         //server: '172.24.4.197',
         server: '203.154.39.197',
         database: 'Bot_DB',
@@ -106,8 +106,8 @@ app.get('/get_sendque_tfu', function (req, res) {
 app.get('/get_mapdata_tfu', function (req, res) {  
 
     var config = {
-        user: 'sa',
-        password: 'bzknCuj6@6',
+        user: 'xxx',
+        password: 'xxx',
         //server: '172.24.4.197',
         server: '203.154.39.197',
         database: 'Bot_DB',
