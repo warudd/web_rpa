@@ -234,6 +234,7 @@ app.get('/que_report_asset', function (req, res) {
         });
     });
 });
+
 app.listen(mssql_port, () => {
     console.log('Successfully on port '+mssql_port);
 });
