@@ -2,3 +2,6 @@ package-lock.json
 .env
 node_modules/
 *.json
+api_connect_db/
+html_css/
+note/
