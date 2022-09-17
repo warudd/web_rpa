@@ -1,0 +1,26 @@
+1
+<script>
+        let request = new XMLHttpRequest();
+        request.open('GET','http://203.154.39.197:80/get_tm_data');
+        request.send();
+        request.onload = () =>{
+            console.log(request);
+        }
+</script>
+
+2
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url:'https://203.154.39.197:80/get_tm_data',
+                type:'GET',
+                success: function(result){
+                    console.log(result);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            })
+        })
+    </script>

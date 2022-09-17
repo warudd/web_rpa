@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>RPA</title>
+   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai&family=KoHo:wght@500&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="rpa_web.css">
+</head>
+<body>
+    <header class="top-header">
+        <a class="menu-item" href="#">MYRPA</a>
+    </header>
+    <div class="type-into">
+        <label for="input-csno"><b>Sale Order No.</b></label>
+        <input id="input-csno" type="text" value="">
+        <button id="button" type="submit">Search</button>
+        </input>
+    </div>
+    <div id="output" class="output">
+        <table id="mytable" class="mytable" hidden>
+            <thead>
+                <tr>
+                    <th colspan="5" id="head-so" class="head-so">TASK</th>
+                </tr>
+            </thead>
+            <tbody id="body-table">
+                <tr>
+                    <td class="head-table"><center>Entry_Date</center></td>
+                    <td class="head-table"><center>Paperless_No</center></td>
+                    <td class="head-table"><center>SO_No</center></td>
+                    <td class="head-table"><center>CS_Status</center></td>
+                    <td class="head-table"><center>Jobstatus</center></td>
+                </tr>
+                <tr>
+                    <td id="task-Entry_Date" class="task"><center>100</center></td>
+                    <td id="task-Paperless_No" class="task"><center>100</center></td>
+                    <td id="task-SO_No" class="task"><center>100</center></td>
+                    <td id="task-CS_Status" class="task"><center>100</center></td>
+                    <td id="task-Jobstatus" class="task"><center>100</center></td>
+                </tr>
+            </tbody>
+            <tfoot id="foot-table">
+                <th id="job-pending" class="job">100</th>
+                <th id="job-onprocess" class="job">100</th>
+                <th id="job-success" class="job">100</th>
+                <th id="job-total" class="job">100</th>
+            </tfoot>
+        </table>
+        <button id="rerun" hidden>rerun</button>
+    </div>
+    <script src="rpa_web.js"></script>  
+</body>
+</html>

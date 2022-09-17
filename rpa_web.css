@@ -1,0 +1,43 @@
+html , body{
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    margin:0px;
+    padding:0px;
+}
+.top-header{
+    background-color: gray;
+}
+.type-into{
+    margin: auto;
+    max-width: 900px;
+    padding: 10px;
+    width: 400px;
+}
+.menu-item{
+    color:rgb(255, 255, 255);
+    padding: 10px;
+    display:inline-block;
+    text-decoration: none;
+}
+.head-so{
+    background-color: rgb(153, 154, 153);
+    color: rgb(255, 255, 255);
+}
+.output{
+    background-color: rgb(250, 250, 250);
+    padding: 10%;
+    max-width: 800px;
+    margin:auto;
+}
+.head-table{
+    padding: 10px;
+    width: 200px;
+}
+.mytable{
+    border-collapse: collapse;
+    padding:40px;
+}
+.mytable th,
+.mytable td{
+    border:2px solid black;
+   
+}

@@ -485,10 +485,10 @@ app.post('/que_input_mct_art', function (req, res) {
         console.log("Connecting Success...")
         var request = new sql.Request();
   
-        let sql_select_input = "SELECT *FROM mail_certax_input_ART WHERE que_no='"+que_no+"' AND receipt_no='"+receipt_no+"' AND inv_no='"+inv_no+"' AND amount='"+amount+"'AND cus_no='"+cus_no+"'";
+        let sql_select_input = "SELECT *FROM mail_certax_input_ART WHERE que_no='"+que_no+"' AND inv_no='"+inv_no+"'AND cus_no='"+cus_no+"'";
         request.query(sql_select_input , function(err , data) {
             if (data.rowsAffected[0]==0){
-                let sqlquery_insert = "INSERT INTO mail_certax_input_ART (que_no,year_doc,receipt_date,receipt_no,inv_no,amount,cus_no,cus_name,mail_cus,finance_ar) VALUES ('"+que_no+"','"+year_doc+"','"+receipt_date+"','"+receipt_no+"','"+inv_no+"','"+amount+"','"+cus_no+"','"+cus_name+"','"+mail_cus+"','"+finance_ar+"')"
+                let sqlquery_insert = "INSERT INTO mail_certax_input_ART (que_no,receipt_date,receipt_no,inv_no,amount,cus_no,cus_name,mail_cus,finance_ar) VALUES ('"+que_no+"','"+receipt_date+"','"+receipt_no+"','"+inv_no+"','"+amount+"','"+cus_no+"','"+cus_name+"','"+mail_cus+"','"+finance_ar+"')"
                 request.query(sqlquery_insert , function(err,data) {
                     if(err) res.send('Insert Error...')
                     if(err) console.log("API : /insert_input_mct_art"+err)
@@ -530,7 +530,7 @@ app.post('/que_input_mct_art', function (req, res) {
                                         }
                                         var Bot_id = "B_MCT_"+string_YM+"A"+zero+String(set_idtoint);
                                     }
-                                    let sql_insert = "INSERT INTO Que_Mail_certax_ART (que_no,time_file,cus_no,cus_name,bot_id,status) VALUES ('"+que_no+"','"+time_file+"','"+cus_no+"','" +cus_name+ "','"+Bot_id+"','Pending')"
+                                    let sql_insert = "INSERT INTO Que_Mail_certax_ART (que_no,time_file,cus_no,cus_name,bot_id,status) VALUES ('"+que_no+"','"+time_file+"','"+cus_no+"','" +cus_name+ "','"+Bot_id+"','Waiting')"
                                     request.query(sql_insert, function (err, data) {
                                         if (err) res.send("Insert Que_mct ERROR");
                                         let sqlquery_update = "UPDATE Running_Bot SET bot_id = '"+Bot_id+"' WHERE type='MCT'";
@@ -546,7 +546,7 @@ app.post('/que_input_mct_art', function (req, res) {
                 });
             }
             else{
-                res.status(200).send('Duplicate Data rec_no : '+receipt_no);
+                res.status(200).send('Duplicate Data inv_no : '+inv_no);
             }
 
         });
@@ -591,6 +591,47 @@ app.put('/update_que_mct_art', function (req, res) {
         });
     });
 
+});
+//Update receipt mailcertax
+app.put('/update_rec_mct_art', function (req, res) {
+
+    var que_no = req.param("que_no");
+    var cus_no = req.param("cus_no");
+    var inv_no = req.param("inv_no");
+    var receipt_no = req.param("receipt_no");
+
+    var config = {
+        user: 'sa',
+        password: 'bzknCuj6@6',
+        //server: '172.24.4.197',
+        server: '203.154.39.197',
+        database: 'Bot_DB',
+        trustServerCertificate: true
+    };
+
+    // connect to your database
+    sql.connect(config, function (err) {
+
+        if (err) console.log("API: /update_rec_mct_art"+err);
+        console.log("Up_Que_Connecting Success...")
+        // create Request object
+        var request = new sql.Request();
+        console.log(receipt_no)
+        let sqlquery = "UPDATE mail_certax_input_ART SET receipt_no = '"+receipt_no+"' WHERE cus_no = '"+cus_no+"' And inv_no = '"+inv_no+"'And que_no = '"+que_no+"'";
+        request.query(sqlquery, function (err, data) {
+            if (err) console.log("API: /update_rec_mct_art"+err)
+            if (data.rowsAffected[0]==0){
+                res.status(200).send("Data mismatch");
+            }
+            else {
+                let sqlquery_update = "UPDATE Que_Mail_certax_ART SET status = 'Pending' WHERE que_no = '"+que_no+"' And cus_no = '"+cus_no+"'";
+                request.query(sqlquery_update, function (err, data) {
+                    if(err) console.log("API: /update_rec_mct_art"+err)
+                    res.status(200).send("Update REC Success..")
+                });
+            }
+        });
+    });
 });
 
 app.listen(mssql_port, () => {
