@@ -57,7 +57,7 @@ sql.connect(config, function (err) {
 //         })
 //     });
 
-    app.post('/testtest', (req,response) => {
+    app.post('/check_cs', (req,response) => {
     var request = new sql.Request();
     var input_cs = req.body.Paperlass_No;
         request.query("SELECT *FROM SO_V2_Log WHERE Folder_Name = '"+input_cs+"'",(err , data) => {
@@ -65,7 +65,7 @@ sql.connect(config, function (err) {
             if(input_cs == undefined){
                 console.log('Why you send undefined?')
             }
-            else{
+            else if(data.rowsAffected != 0){
             const tag_p_o = "<p><center>";
             const tag_p_c = "</center></p>";
             console.log('input_cs : '+input_cs)
@@ -87,7 +87,41 @@ sql.connect(config, function (err) {
             response.statusCode = 200;
             response.send(data_json);
             }
+            else {
+                response.send({message : 'no cs'})
+            }
         })
+    });
+
+    app.post('/rerun_cs', (req,response) => {
+        let request = new sql.Request();
+        var input_cs = req.body.Paperlass_No;
+            request.query("SELECT *FROM UAT_TM_OLS_Doc WHERE Ref_job = '"+input_cs+"'",(err , data) => {
+                if(err) console.log('select_err'+err)
+                if(input_cs == undefined){
+                    console.log('Why you send undefined?')
+                }
+                else if(data.rowsAffected != 0){
+                request.query("UPDATE UAT_TM_OLS_Doc SET Status_Queue = 'TEST' WHERE Ref_job = '"+input_cs+"'",(err , data) => {
+                    if(err) console.log('Update_err '+err)
+                    request.query("SELECT *FROM UAT_TM_OLS_Doc WHERE Ref_job = '"+input_cs+"'",(err , data) => {
+                    console.log(input_cs)
+                    console.log(data)
+                    const status_queue = data.recordset[0].Status_Queue;
+                    const data_json = {
+                        "status_q":status_queue
+                    }
+                    console.log(data_json)
+                    response.header('Access-Control-Allow-Origin','*');
+                    response.statusCode = 200;
+                    response.send(data_json);
+                    })
+                })
+                }
+                else {
+                    response.send({message : 'no cs update'})
+                }
+            })
     });
 });
 app.listen(mssql_port, () => {
