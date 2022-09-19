@@ -4,28 +4,38 @@ html , body{
     padding:0px;
 }
 .top-header{
-    background-color: gray;
+    background-color: whitesmoke;
+    padding: 20px;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index: 10;
 }
 .type-into{
     margin: auto;
     max-width: 900px;
-    padding: 10px;
+    padding-top: 85px;
+    padding-bottom: 20px;
     width: 400px;
 }
 .menu-item{
-    color:rgb(255, 255, 255);
+    background-color: aquamarine;
+    color: black;
     padding: 10px;
     display:inline-block;
     text-decoration: none;
+    position: fixed;
+    z-index: 10;
 }
 .head-so{
-    background-color: rgb(153, 154, 153);
-    color: rgb(255, 255, 255);
+    background-color: hsl(142, 52%, 96%);
+    color: hsl(0, 0%, 29%);
 }
 .output{
+    padding: 30px;
     background-color: rgb(250, 250, 250);
-    padding: 10%;
-    max-width: 800px;
+    max-width: 1000px;
     margin:auto;
 }
 .head-table{
@@ -34,10 +44,16 @@ html , body{
 }
 .mytable{
     border-collapse: collapse;
-    padding:40px;
+    padding:20px;
 }
 .mytable th,
 .mytable td{
     border:2px solid black;
    
+}
+.task{
+    max-width: 500px;
+    width: 20%;
+    height: 50px;
+    text-align: center;
 }

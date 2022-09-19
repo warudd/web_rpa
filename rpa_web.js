@@ -1,9 +1,3 @@
-// document.querySelector('#button').onclick = function(){alert('hello');};
-// let button = document.getElementById("button")
-// if(button.addEventListener)
-//     button.addEventListener('click',doFunction,false);
-// else if(button.addEventListener)
-//     button.attachEvent('onclick',doFunction);
 //task
 let task_entdate = document.querySelector('#task-Entry_Date');
 let task_ppl = document.querySelector('#task-Paperless_No');
@@ -15,11 +9,8 @@ let mytable=document.getElementById('mytable');
 let headso = document.getElementById('head-so');
 let input_type = document.querySelector('#input-csno');
 let buttonSearch=document.querySelector('#button');
-let output=document.querySelector('#output');
 //rerun
 let buttonRerun=document.getElementById('rerun');
-
-// function send_data(event){
 //     event.preventDefault();
 //     let Paperlass_No = input_type.value
 //     console.log(Paperlass_No)
@@ -62,7 +53,16 @@ let buttonRerun=document.getElementById('rerun');
 buttonSearch.addEventListener('click', (eventSearch)=>{
     eventSearch.preventDefault();
     let input_cs = input_type.value
-
+    console.log(input_cs)
+    if(input_cs === ''){
+        buttonRerun.style.display = 'none';
+        mytable.style.display = 'none';
+        return
+    }
+    else if(input_cs!==''){
+        mytable.style.display = 'block';
+    }
+    headso.innerHTML = '<center>'+input_cs+'</center>'
     const ppl_no = {
         Paperlass_No: input_cs
     };
@@ -84,28 +84,24 @@ buttonSearch.addEventListener('click', (eventSearch)=>{
             let input_so_no = cs_json.so_no;
             let input_cs_status = cs_json.cs_status;
             let input_job_status = cs_json.job_status;
-            task_entdate.innerHTML = input_entry_date
-            task_ppl.innerHTML = input_ppl_no
-            task_sono.innerHTML = input_so_no
-            task_csstatus.innerHTML = input_cs_status
-            task_jobstatus.innerHTML = input_job_status
+            task_entdate.innerHTML = '<center>'+input_entry_date+'</center>'
+            task_ppl.innerHTML = '<center>'+input_ppl_no+'</center>'
+            task_sono.innerHTML = '<center>'+input_so_no+'</center>'
+            task_csstatus.innerHTML = '<center>'+input_cs_status+'</center>'
+            task_jobstatus.innerHTML = '<center>'+input_job_status+'</center>'
+            if(input_job_status === 'Success' || input_job_status === undefined){
+                buttonRerun.style.display = 'none';
+            }
+            else if(input_job_status !== 'Success'){
+                buttonRerun.style.display = 'block';
+            }
         }
         addhtml();
-        console.log(cs_json)
     })
     .catch((error) => {
         console.log(error.message)
     })
-    if(input_cs === ''){
-        return
-    }
-    if(mytable.style.display === ''){
-        mytable.style.display = 'block';
-    } 
-    if(rerun.style.display === ''){
-        rerun.style.display = 'block';
-    }
-    headso.innerHTML = input_cs
+
 });
 buttonRerun.addEventListener('click',(eventRerun) =>{
     eventRerun.preventDefault();

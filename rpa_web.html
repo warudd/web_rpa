@@ -6,10 +6,11 @@
    <title>RPA</title>
    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai&family=KoHo:wght@500&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="rpa_web.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
     <header class="top-header">
-        <a class="menu-item" href="#">MYRPA</a>
+        <a href="#">MYRPA</a>
     </header>
     <div class="type-into">
         <label for="input-csno"><b>Cost Sheet No.</b></label>
@@ -48,8 +49,20 @@
                 <th id="job-total" class="job">100</th>
             </tfoot> -->
         </table>
-        <button id="rerun" hidden>Rerun</button>
+        <p id="rerun" hidden>
+            <button class="button is-primary is-outlined">Rerun</button>
+        </p>
+
+
     </div>
     <script src="rpa_web.js"></script>  
+    <div  style="height: 1000px;"></div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Robotic Process Automation (RPA)</strong><br> Automated Process Monitoring. (2022)
+              </p>
+        </div>
+    </footer>
 </body>
 </html>
