@@ -295,7 +295,7 @@ else {
                 var string_year = String(year);
                 var string_YM = string_year+string_month;
                 var num_id = data.recordset[0].bot_id;
-                var split_id = num_id.split("A");
+                var split_id = num_id.split("-");
                 var split_YM = split_id[0].split("_");
                 var id = parseInt(split_id[1])+1;
                 var zero = "";
@@ -304,7 +304,7 @@ else {
                     for (let index = 0; index < (10-(String(id).length)); index++){
                     zero = zero +"0";
                     }
-                    var Bot_id = "BOT_"+type_docid+"_"+string_YM+"A"+zero+String(id);
+                    var Bot_id = "BOT_"+type_docid+"_"+string_YM+"-"+zero+String(id);
                     console.log(Bot_id)
                 }
             else {
@@ -314,7 +314,7 @@ else {
                 for (let index = 0; index < (10-(String(set_idtoint).length)); index++){
                     zero = zero +"0";
                 }
-                var Bot_id = "BOT_"+type_docid+"_"+string_YM+"A"+zero+String(set_idtoint);
+                var Bot_id = "BOT_"+type_docid+"_"+string_YM+"-"+zero+String(set_idtoint);
                 console.log(Bot_id);
             }
                 let sql_query = "SELECT *FROM "+table_name+" WHERE document_id = '"+document_id+"'";
@@ -394,13 +394,12 @@ else {
             console.log(table_name)
             if (month<10){
                         month = "0"+month;
-                        console.log("month");
             };
                 var string_month = String(month);
                 var string_year = String(year);
                 var string_YM = string_year+string_month;
                 var num_id = data.recordset[0].bot_id;
-                var split_id = num_id.split("A");
+                var split_id = num_id.split("-");
                 var split_YM = split_id[0].split("_");
                 var id = parseInt(split_id[1])+1;
                 var zero = "";
@@ -410,7 +409,7 @@ else {
                     zero = zero +"0";
                     console.log("if1");
                     }
-                    var Bot_id = "UATBOT_"+type_docid+"_"+string_YM+"A"+zero+String(id);
+                    var Bot_id = "UATBOT_"+type_docid+"_"+string_YM+"-"+zero+String(id);
                     console.log(Bot_id)
                 }
             else {
@@ -421,7 +420,7 @@ else {
                     zero = zero +"0";
                     console.log("if2");
                 }
-                var Bot_id = "UATBOT_"+type_docid+"_"+string_YM+"A"+zero+String(set_idtoint);
+                var Bot_id = "UATBOT_"+type_docid+"_"+string_YM+"-"+zero+String(set_idtoint);
             }
                 let sql_query = "SELECT *FROM "+table_name+" WHERE document_id = '"+document_id+"'";
                 request.query(sql_query, function (err,data) {
@@ -445,6 +444,37 @@ else {
             })
     })
 }
+});
+//Get RFC_data pplv3
+app.get('/uat_rfc_data', function (req, res) {  
+
+    var config = {
+        user: 'sa',
+        password: 'bzknCuj6@6',
+        //server: '172.24.4.197',
+        server: '203.154.39.197',
+        database: 'Bot_DB',
+        trustServerCertificate: true
+    };
+    sql.connect(config, function (err) {
+  
+        var request = new sql.Request();
+        let sqlquery = "SELECT *FROM UAT_RFC_data WHERE Status_Queue = 'Pending'";
+        request.query(sqlquery, function (err, data) {
+            if (err) console.log("API : /get_RFC_dataV3"+err)
+            if (data.rowsAffected[0]==0)
+            res.send({message : "No data"});
+            else {
+                res.send(data.recordset[0])
+                var docid_data = data.recordset[0].document_id;
+                let sqlquery_update = "UPDATE UAT_RFC_data SET Status_Queue = 'On Process' WHERE document_id ='"+docid_data+"'";
+                request.query(sqlquery_update, function (err, data) {
+                    if(err) console.log("API : /get_RFC_dataV3"+err)
+                    console.log('Update status_queue success...')
+                });
+            }
+        })
+    });
 });
 
 //mail_certax (newque+inputdata)
@@ -633,6 +663,7 @@ app.put('/update_rec_mct_art', function (req, res) {
         });
     });
 });
+
 
 app.listen(mssql_port, () => {
     console.log('Successfully on port '+mssql_port);

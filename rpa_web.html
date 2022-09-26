@@ -22,7 +22,7 @@
         <table id="mytable" class="mytable" hidden>
             <thead>
                 <tr>
-                    <th colspan="5" id="head-so" class="head-so">TASK</th>
+                    <th colspan="6" id="head-so" class="head-so">TASK</th>
                 </tr>
             </thead>
             <tbody id="body-table">
@@ -30,8 +30,9 @@
                     <td class="head-table"><center>Entry_Date</center></td>
                     <td class="head-table"><center>Paperless_No</center></td>
                     <td class="head-table"><center>SO_No</center></td>
-                    <td class="head-table"><center>CS_Status</center></td>
                     <td class="head-table"><center>Jobstatus</center></td>
+                    <td class="head-table"><center>CS_Status</center></td>
+                    <td class="head-table"><center>Comment</center></td>
                 </tr>
                 <tr>
                     <td id="task-Entry_Date" class="task"><center></center></td>
@@ -39,6 +40,7 @@
                     <td id="task-SO_No" class="task"><center></center></td>
                     <td id="task-CS_Status" class="task"><center></center></td>
                     <td id="task-Jobstatus" class="task"><center></center></td>
+                    <td id="task-Comment" class="taskcomment"></td>
                 </tr>
             </tbody>
             <!-- <tfoot id="foot-table">
@@ -49,11 +51,10 @@
                 <th id="job-total" class="job">100</th>
             </tfoot> -->
         </table>
-        <p id="rerun" hidden>
-            <button class="button is-primary is-outlined">Rerun</button>
+        <p id="p-button" hidden>
+            <button id = "rerun" class="button is-primary is-outlined">Rerun</button>
         </p>
-
-
+        
     </div>
     <script src="rpa_web.js"></script>  
     <div  style="height: 1000px;"></div>
@@ -61,7 +62,7 @@
         <div class="content has-text-centered">
             <p>
                 <strong>Robotic Process Automation (RPA)</strong><br> Automated Process Monitoring. (2022)
-              </p>
+            </p>
         </div>
     </footer>
 </body>

@@ -44,12 +44,14 @@ sql.connect(config, function (err) {
                 const so_no = data.recordset[0].SO_No;
                 const cs_status = data.recordset[0].Costsheet_Status;
                 const job_status = data.recordset[0].Jobstatus;
+                const comment = data.recordset[0].Comment;
                 const data_json ={
                     "entry_date":entry_date,
                     "cs_no":cs_no,
                     "so_no":so_no,
                     "cs_status":cs_status,
-                    "job_status":job_status
+                    "job_status":job_status,
+                    "comment":comment
                 }
                 console.log(data_json)
             response.header('Access-Control-Allow-Origin','*');
@@ -76,7 +78,7 @@ sql.connect(config, function (err) {
                     request.query("SELECT *FROM Que_V2_Bot WHERE type_Doc = 'Costsheet' And doc_id = '"+input_cs+"'",(err , data) => {
                     console.log(input_cs)
                     console.log(data)
-                    const status_queue = data.recordset[0].Status_Queue;
+                    const status_queue = data.recordset[0].status;
                     const data_json = {
                         "status_q":status_queue
                     }
