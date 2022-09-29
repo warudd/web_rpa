@@ -1,0 +1,51 @@
+Command Line (Ubuntu - App Linux Destribution)
+pwd : ดู task ของเราว่าตอนนี้เราอยู่ที่ไหน
+ls : ดูว่าใน Folder ที่เราอยู่มีอะไรบ้าง
+ls -l : ดู Detail (จะมี Permission , group เจ้าของ , ขนาดไฟล์ ขึ้นมาและอื่นๆ)
+ls -al : check file all
+ll (คำสั่งลัด) : shortcut ของ ls -al
+* . ที่อยู่ข้างหน้าของไฟล์ คือ ไฟล์ที่ถูกซ่อน
+clear : clear หน้า cmd
+echo hello (writeline : hello ออกมาหน้า console)
+-----------------------------------------------------
+Change directory
+cd desktop/ (กด tab จะ auto complete) : change directory เข้าไปยังโฟลเดอร์ที่กำหนด
+cd .. : คือย้อนกลับ 1 Folder
+cd ตัวหนอน : ย้อนกลับไปหน้า Home directory
+-----------------------------------------------------
+การแสดงข้อมูล และแก้ไขข้อมูลในไฟล์
+cat ชื่อไฟล์ .typefile : แสดงข้อมูลด้านในไฟล์ (แต่ต้องเข้าไปที่โฟลเดอร์นั้นที่ไฟล์อยู่ก่อน) (*ควร ls เช็คชื่อไฟล์ก่อน)
+nano ชื่อไฟล์ .typefile : แก้ไขไฟล์ 
+    พิมพ์ข้อมูลด้านในที่จะแก้ไข บันทึกกด ctr+s (y)
+**(vim) vi ชื่อไฟล์.typefile  คล้ายๆ nano แต่ advance กว่า
+    ต้องกด i เพื่อให้ด้านล่างเป็น insert ถึงจะพิมได้ เสร็จแล้วให้กด esc :wq (เพื่อ save) :q! (ไม่ save) เพื่อออก
+    วิธีออกจากหน้า vim พิม :q +enter
+-----------------------------------------------------
+วิธีสร้างไฟล์ใหม่
+nano newfile.txt +enter (ใส่ข้อมูล) การออกกด ctr+x (y)
+touch newfile2.txt +enter : สร้างไฟล์เปล่า
+-----------------------------------------------------
+Copy
+cp newfile.txt newfile2.txt : เป็นการ copy newfile และวางโดยกำหนดชื่อไฟล์เป็น newfile2
+cp newfile.txt ../newfile2.txt : เป็นการ copy file ออกมานอก Folder ที่เราอยู่1ชั้น พร้อมกำหนดชื่อไฟล์เป็น newfile2 (เช่น เราอยู่ใน desktop/wtf = จะ copy file ไปหน้า desktop)
+-----------------------------------------------------
+Move & Cut,paste
+mv newfile.txt ../newfile2.txt : เป็นการ move file ออกมานอก Folder ที่เราอยู่1ชั้นพร้อมเปลี่ยนชื่อไฟล์
+mv newfile.txt newfile2.txt : เป็นการ Rename file จาก newfile เป็น newfile2
+-----------------------------------------------------
+Permission (EX.drwxr-xr-x) (EX.-rw-r--r--) (การปรับเปลี่ยนเจ้าของไฟล์)
+d = Directory Folder
+แยกท่อน
+rwx = เจ้าของไฟล์ u = owner/user 
+r-x = g = group
+r-x = o = everyone/other ทุกคน ไม่ใช่เรา
+แยกตัวอักษร
+- = file : 0
+r = read : 4
+w = write : 2
+x = execute = การรันโปรแกรม : 1
+(*Permission = r+w+x = 7 , Permission = r+x = 5)
+Permission ตัวเลข = Ex. 766,750,740
+    วิธีเปลี่ยน Permission เพื่อกำหนดการทำงาน
+- chmod 666 newfile : การกำหนด Permission ให้เข้าถึงไฟล์ที่ต้องการทำไรได้บ้าง ตัวเลขมาจากชุดตัวเลข +กันแต่ละชุด 3 ตัว
+- chmod o-w newfile : เป็นการลบท่อนสุดท้ายคือ other ออกไม่ให้เขียนได้ในไฟล์นี้ (ถ้าเพิ่มก็เปลี่ยนเครื่องหมาย)

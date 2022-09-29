@@ -446,7 +446,7 @@ else {
 }
 });
 //Get RFC_data pplv3
-app.get('/uat_rfc_data', function (req, res) {  
+app.get('/rfc_data', function (req, res) {  
 
     var config = {
         user: 'sa',
@@ -459,7 +459,7 @@ app.get('/uat_rfc_data', function (req, res) {
     sql.connect(config, function (err) {
   
         var request = new sql.Request();
-        let sqlquery = "SELECT *FROM UAT_RFC_data WHERE Status_Queue = 'Pending'";
+        let sqlquery = "SELECT *FROM RFC_data WHERE Status_Queue = 'Pending'";
         request.query(sqlquery, function (err, data) {
             if (err) console.log("API : /get_RFC_dataV3"+err)
             if (data.rowsAffected[0]==0)
@@ -467,7 +467,7 @@ app.get('/uat_rfc_data', function (req, res) {
             else {
                 res.send(data.recordset[0])
                 var docid_data = data.recordset[0].document_id;
-                let sqlquery_update = "UPDATE UAT_RFC_data SET Status_Queue = 'On Process' WHERE document_id ='"+docid_data+"'";
+                let sqlquery_update = "UPDATE RFC_data SET Status_Queue = 'On Process' WHERE document_id ='"+docid_data+"'";
                 request.query(sqlquery_update, function (err, data) {
                     if(err) console.log("API : /get_RFC_dataV3"+err)
                     console.log('Update status_queue success...')
