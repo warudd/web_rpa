@@ -582,6 +582,52 @@ app.post('/que_input_mct_art', function (req, res) {
         });
     });
 });
+//Get Que mailcertax
+app.get('/que_mct_art', function (req, res) {  
+      
+    var config = {
+        user: 'sa',
+        password: 'bzknCuj6@6',
+        //server: '172.24.4.197',
+        server: '203.154.39.197',
+        database: 'Bot_DB',
+        trustServerCertificate: true
+    };
+
+    sql.connect(config, function (err) {
+  
+        if (err) console.log(err);
+        console.log("Connecting Success...")
+        
+        var request = new sql.Request();
+        let sqlquery = "SELECT *FROM Que_Mail_certax_ART WHERE status='Pending'";
+        request.query(sqlquery, function (err, data) {
+            if (err) console.log(err) 
+         
+            if (data.rowsAffected[0] == 0) {
+              var json_retunr_Que = { data: "Not Queue" };
+              res.send(json_retunr_Que);
+  
+          } else {
+                var que_no=data.recordset[0].que_no;
+                var cus_no=data.recordset[0].cus_no;
+                var bot_id=data.recordset[0].bot_id;
+                let sql_query_getinput = "SELECT *FROM mail_certax_input_ART WHERE que_no='"+que_no+"' and cus_no='"+cus_no+"'";
+                    request.query(sql_query_getinput, function (err, data) {
+                    if(err) res.send('check error get input'+err) 
+                    if(err) console.log('check error get input'+err)
+                    var send_data = data.recordset;
+                        res.json(send_data);
+                    let sqlquery_update = "UPDATE Que_Mail_certax_ART SET status = 'On Process' WHERE bot_id='"+bot_id+"'";
+                    request.query(sqlquery_update, function (err, data) {
+                        if (err) console.log("Update Error" + err.message)
+                        console.log("Update Success...")
+                    });
+                });
+            }                                                      
+        });
+    });
+});
 //Update Q mailcertax
 app.put('/update_que_mct_art', function (req, res) {
     var bot_id = req.param("bot_id");

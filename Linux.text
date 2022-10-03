@@ -33,7 +33,7 @@ Move & Cut,paste
 mv newfile.txt ../newfile2.txt : เป็นการ move file ออกมานอก Folder ที่เราอยู่1ชั้นพร้อมเปลี่ยนชื่อไฟล์
 mv newfile.txt newfile2.txt : เป็นการ Rename file จาก newfile เป็น newfile2
 -----------------------------------------------------
-Permission (EX.drwxr-xr-x) (EX.-rw-r--r--) (การปรับเปลี่ยนเจ้าของไฟล์)
+Permission (EX.drwxr-xr-x) (EX.-rw-r--r--) (การอ่านและแก้ไขไฟล์)
 d = Directory Folder
 แยกท่อน
 rwx = เจ้าของไฟล์ u = owner/user 
@@ -49,3 +49,93 @@ Permission ตัวเลข = Ex. 766,750,740
     วิธีเปลี่ยน Permission เพื่อกำหนดการทำงาน
 - chmod 666 newfile : การกำหนด Permission ให้เข้าถึงไฟล์ที่ต้องการทำไรได้บ้าง ตัวเลขมาจากชุดตัวเลข +กันแต่ละชุด 3 ตัว
 - chmod o-w newfile : เป็นการลบท่อนสุดท้ายคือ other ออกไม่ให้เขียนได้ในไฟล์นี้ (ถ้าเพิ่มก็เปลี่ยนเครื่องหมาย)
+-----------------------------------------------------
+User / root
+sudo : คือการให้ root มาออกคำสั่ง
+sudo su - : จะเปลี่ยนเป็น root เลย
+logout
+exit - ออกจาก user เพื่อเข้าไปที่ user admin
+sudo passwd user : เปลี่ยน password
+sudo adduser newuser : เพิ่ม user ชื่อ newuser
+    การให้สิทธิ root (อยู่ที่ user admin)
+    sudo visudo : คำสั่งมอบสิทธิ root
+        ไปดูที่หัวข้อ User privilege และเพิ่ม user ที่สร้างเข้าไป
+sudo su newuser : การ login เข้าไปที่ newuser
+-----------------------------------------------------
+การเปลี่ยนเจ้าของไฟล์
+sudo chown newuser:newuser newfile : เป็นการเปลี่ยนเจ้าของและgroup ของไฟล์จาก me>newuser
+sudo chown newuser:newuser -R newfolder : เป็นการเปลี่ยนเจ้าของและgroup ทั้งโฟลเดอร์นั้น
+-----------------------------------------------------
+Help
+คำสั่ง --help เช่น chown --help
+-----------------------------------------------------
+APP NGINX (ubunto) (centos = yum : apt (ubunto))
+sudo apt update : update package server
+sudo apt install nginx : install nginx
+sudo systemctl status nginx : ตรวจสอบสถานะของ nginx (ตรง status สามารถเป็น start,stop ได้)
+sudo systemctl enable nginx : การเริ่ม Nginx โดยอัตโนมัติเมื่อบูตหรือรีบูต
+sudo systemctl restart nginx : รีสตาร์ทเว็บเซิร์ฟเวอร์โดยเฉพาะหลังจากทำการเปลี่ยนแปลงไฟล์คอนฟิกูเรชันให้รัน
+sudo systemctl reload nginx : โหลดซ้ำเพื่อหลีกเลี่ยงการเชื่อมต่อหลุด
+sudo dpkg -l nginx : ตรวจสอบ Version ของ nginx
+    เปิด port nginx บน firewall UFW
+    nginx Full (For SSL/TLS) : Opens port 80 & 443
+    nginx HTTP (For web traffic) : Open port 80
+    nginx HTTPS (For SSL/TLS) : Open port 443
+sudo ufw enable : เปิดใช้งาน firewall
+sudo ufw allow 'nginx http' : ถ้าไม่ได้อยู่บน server ที่เข้ารหัสจึงอนุญาตให้รับส่งข้อมูลบน port 80 เท่านั้น
+sudo ufw reload : โหลด firewall ใหม่เพื่อให้การเปลี่ยนแปลงยังมีอยู่
+sudo ufw status : ตรวจสอบสถานะของ firewall เพื่อตรวจสอบโปรไฟล์ที่ได้รับอนุญาต
+ifconfig : ตรวจสอบ ip ของ server
+curl ifconfig.me : ตรวจสอบ ip ของ server (หากอยู่บนเซิร์ฟเวอร์คลาวด์เพื่อดึง IP สาธารณะของเซิร์ฟเวอร์)
+
+    การกำหนดค่า Nginx Server Block
+    sudo mkdir -p /var/www/html : การสร้างไฟล์บล็อกเซิร์ฟเวอร์ขั้นแรกให้สร้างไดเร็กทอรีสำหรับโดเมนของคุณ
+    nginx -t : ตรวจสอบ nginx ว่า config อยู่กับไฟล์ไหน
+    *อย่าลืม restart service nginx
+    { ตย. nano /etc/nginx/sites-available/crazytechgeek.info ลองเข้าดู path พวกตัว .conf หรือ .info ก่อนและชี้ path
+        server : root : คือไปชี้ path ที่ต้องการให้หน้าเว็บเปิด
+        server : sever : ใส่ IP เครื่อง Public
+    }
+    { **อันนี้ไม่ชัวร์ ไม่ได้ใช้ลองเล่นดู
+    sudo ln -s /var/www/html/*ตัว.info /etc/nginx/sites-enabled: เชื่อมโยงไปยังไดเร็กทอรีที่เปิดใช้งานไซต์ซึ่งเซิร์ฟเวอร์ Nginx อ่านเมื่อเริ่มต้น
+    **sudo ln -s ต้องมี /etc... 
+    1. /etc/nginx/nginx.conf
+    2. /etc/nginx/sites-available
+    3. /etc/nginx/sites-enabled
+    }
+-----------------------------------------------------
+Docker
+docker container <action> <container-name> : คำสั่ง run <restart> , <start>
+docker ps : check <status> หรือ check <container name>
+-----------------------------------------------------
+CentOS
+ตรวจสอบ Service
+sudo chkconfig <service> : ตรวจสอบว่า service ทำงานอยู่หรือไม่
+sudo systemctl is-enabled <service> : ตรวจสอบว่า service ทำงานอยู่หรือไม่
+sudo systemctl list-unit-files --type=service : เช็ค Service ในเครื่องทั้งหมด
+curl ifconfig.me : ตรวจสอบ IP
+-----------------------------------------------------
+CentOS
+Firewall
+sudo yum install -y firewalld : install
+sudo systemctl enable firewalld : เปิดใช้งาน
+sudo systemctl start firewall : เริ่มการทำงาน
+-----------------------------------------------------
+CentOS
+Port
+sudo firewall-cmd --permanent --add-port=8000/tcp : เปิด Port
+sudo firewall-cmd --reload : reload
+sudo firewall-cmd --list-all : แสดง port ที่เปิดอยู่
+sudo firewall-cmd --remove-port=8000/tcp : ปิด Port
+sudo firewall-cmd --runtime-to-permanent : ตรวจสอบเวลา ?
+curl <ip> : ตรวจสอบ Port Public 
+-----------------------------------------------------
+CentOS
+Nginx
+sudo systemctl start nginx.service : start nginx
+sudo systemctl restart nginx.service : restart nginx
+-----------------------------------------------------
+CentOS & Ubuntu 
+Check
+ls -l /usr/share/nginx/html/ : เจาะเข้าไปเช็คข้อมูลในโฟลเดอร์นั้น เอาไฟล์ที่ต้องการใช้วางที่นี้
+ืnano /etc/nginx/nginx.conf : เจาะเข้าไปแก้ไขในไฟล์นั้นๆ เพื่อไประบุ path ไฟล์ที่ต้องการใช้
