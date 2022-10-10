@@ -709,7 +709,72 @@ app.put('/update_rec_mct_art', function (req, res) {
         });
     });
 });
+//Post Log mailcertax
+app.post('/log_mailcertax', function (req, res) {
+    var que_no=req.body.que_no;
+    var file_name=req.body.file_name;
+    var time_run=req.body.time_run; 
+    var year=req.body.year;
+    var receipt_date=req.body.receipt_date;
+    var receipt_no=req.body.receipt_no;
+    var inv_no=req.body.inv_no;
+    var amount=req.body.amount;
+    var cus_no=req.body.cus_no; 
+    var cus_name = req.body.cus_name;
+    var mail_cus = req.body.mail_cus;
+    var finance_ar = req.body.finance_ar;
+    var status = req.body.status;
+    var datetime_ = new Date();
+    var month_=datetime_.getMonth()+1;
+    var day_=datetime_.getDate();
+    var year_=datetime_.getFullYear().toString();
+        if(month_<10){
+          month_="0"+month_;
+        }if(day_<10){
+          day_="0"+day_
+        } 
+    var time_ampm=(datetime_.toLocaleString('en-US', {hour: '2-digit',minute: '2-digit',second: '2-digit',hour12: true}))
+    time_run =year_+"-"+month_+"-"+day_+" "+time_ampm;
+  
+    var config = {
+        user: 'sa',
+        password: 'bzknCuj6@6',
+        //server: '172.24.4.197',
+        server: '203.154.39.197',
+        database: 'Bot_DB'
+    };
+    sql.connect(config, function (err) {
+      if (err) console.log("API :/log_mailcertax"+err);
+      var request = new sql.Request();
+      let insert_log_mct = "INSERT INTO mail_certax_log (file_name,time_run,year,receipt_date,receipt_no,inv_no,amount,cus_no,cus_name,mail_cus,finance_ar,status) VALUES ('"+file_name+"','"+time_run+"','"+year+"','"+receipt_date+"','"+receipt_no+"','"+inv_no+"','"+amount+"','"+cus_no+"','"+cus_name+"','"+mail_cus+"','"+finance_ar+"','"+status+"')"
+      request.query(insert_log_mct, function (err, data1) {
+        if (err) console.log("API :/log_mailcertax"+err);
+        console.log('Insert log_mailcertax Success...')
+        console.log(que_no)
+        console.log(file_name)
 
+            if (file_name == 'AR_Tracking'){
+                let sqlquery_update_art = "UPDATE Que_Mail_certax_ART SET status = 'Success' WHERE que_no='"+que_no+"' And cus_no='"+cus_no+"'";
+                request.query(sqlquery_update_art, function (err, data2) {
+                if(err) console.log("Update Error ART : /log_mailcertax :"+err)
+                res.send('Insert Log ART Success')
+                console.log("Update ART Success...");
+                });
+            }
+            else {
+                let sqlquery_update = "UPDATE Que_Mail_certax SET status = 'Success' WHERE file_name='"+file_name+"' And cus_no='"+cus_no+"'";
+                request.query(sqlquery_update, function (err, data2) {
+                if (err) {
+                status_update_data = "Failed";
+                console.log("Update Error : /log_mailcertax" + err.message)
+                }
+                console.log("Update Success...");
+                res.send('Insert Log Success')
+                });
+            }
+        });
+    });
+});
 
 app.listen(mssql_port, () => {
     console.log('Successfully on port '+mssql_port);
