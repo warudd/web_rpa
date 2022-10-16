@@ -13,8 +13,6 @@ const corsOption = {
 app.use(cors(corsOption));
 app.use(express.json());
 
-// const db_ConnectionString = 'mssql://sa:bzknCuj6@203.154.39.197:3000/Bot_DB'
-// const db = sql.connect(db_ConnectionString);
 const config = {
     user: 'xxx',
     password: 'xxx',
