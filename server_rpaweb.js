@@ -16,9 +16,8 @@ app.use(express.json());
 // const db_ConnectionString = 'mssql://sa:bzknCuj6@203.154.39.197:3000/Bot_DB'
 // const db = sql.connect(db_ConnectionString);
 const config = {
-    user: 'sa',
-    password: 'bzknCuj6@6',
-    //server: '172.24.4.197',
+    user: 'xxx',
+    password: 'xxx',
     server: '203.154.39.197',
     database: 'Bot_DB',
     trustServerCertificate: true
