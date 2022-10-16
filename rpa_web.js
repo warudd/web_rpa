@@ -13,44 +13,6 @@ let buttonSearch=document.querySelector('#button');
 //rerun
 let p_button=document.getElementById('p-button');
 let buttonRerun=document.getElementById('rerun');
-//     event.preventDefault();
-//     let Paperlass_No = input_type.value
-//     console.log(Paperlass_No)
-
-//     const ppl_no = {
-//         Paperlass_No:Paperlass_No
-//     };
-//     console.log(ppl_no)
-//     fetch('http://localhost:3000/testtest', {
-//         method:'POST',
-//         headers:{
-//             'Content-Type':'application/json;charset=utf-8'
-//         },
-//         body: JSON.stringify(ppl_no)
-//     })
-//     .then((response) =>{
-//         return response.json();
-//     })
-//     .then((json) => {
-//         const paperless = json.Paperlass_No;
-//         alert(paperless)
-//     })
-//     .catch((error) => {
-//         console.log(error.message)
-//     })
-//     if(Paperlass_No === ''){
-//         return
-//     }
-//     if(mytable.style.display === ''){
-//         mytable.style.display = 'block';
-//     } 
-//     if(rerun.style.display === ''){
-//         rerun.style.display = 'block';
-//     }
-//     headso.innerHTML = Paperlass_No
-// }
-
-// button.addEventListener('click' , send_data);
 
 buttonSearch.addEventListener('click', (eventSearch)=>{
     eventSearch.preventDefault();
